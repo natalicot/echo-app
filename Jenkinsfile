@@ -15,7 +15,7 @@ pipeline {
         stage('build') {
             steps{
                 script{
-                        sh "echo hello"
+                        sh "docker build -t dev-${GIT_COMMIT_HASH} ."
                     }
                 }
             }
@@ -68,9 +68,9 @@ pipeline {
         // }
     }
     post { 
-        always { 
-            // sh 'docker rm -f runtest || true'
-        }
+        // always { 
+        //     // sh 'docker rm -f runtest || true'
+        // }
         failure {
             updateGitlabCommitStatus state: 'failed'
         }
