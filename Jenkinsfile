@@ -1,9 +1,4 @@
 
-// checking docker image name
-
-
-
-// pipline:
 
 pipeline {
 
