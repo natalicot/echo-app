@@ -6,14 +6,22 @@ pipeline {
 
     stages { 
         stage('build') {
-            when {
-                expression { BRANCH_NAME =~ /^(master$)/}
+            if (env.BRANCH_NAME == 'master'){
+                docker build -t 1.0.${BUILD_NUMBER} .
+            } else {
+                docker build -t dev-${GIT_COMMIT_HASH} .
             }
-            steps{
-                script{
-                    sh "docker build -t 1.0.${BUILD_NUMBER} ."
-                }
-            }
+
+
+
+            // when {
+            //     expression { BRANCH_NAME =~ /^(master$)/}
+            // }
+            // steps{
+            //     script{
+            //         sh "docker build -t 1.0.${BUILD_NUMBER} ."
+            //     }
+            // }
             // when {
             //     expression { BRANCH_NAME =~ /^(dev$)/}
             // }
@@ -80,16 +88,16 @@ pipeline {
         //     }
         // }
     }
-    post { 
-        // always { 
-        //     // sh 'docker rm -f runtest || true'
-        // }
-        failure {
-            updateGitlabCommitStatus state: 'failed'
-        }
-        success {
-            updateGitlabCommitStatus state: 'success'
-        }
-    }
+    // post { 
+    //     // always { 
+    //     //     sh 'docker rm -f runtest || true'
+    //     // }
+    //     failure {
+    //         updateGitlabCommitStatus state: 'failed'
+    //     }
+    //     success {
+    //         updateGitlabCommitStatus state: 'success'
+    //     }
+    // }
     
 }
