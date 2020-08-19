@@ -8,7 +8,8 @@ pipeline {
         stage('build') {
             if (env.BRANCH_NAME == 'master'){
                 docker build -t 1.0.${BUILD_NUMBER} .
-            } else {
+            }
+            else {
                 docker build -t dev-${GIT_COMMIT_HASH} .
             }
 
