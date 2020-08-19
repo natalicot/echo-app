@@ -1,15 +1,7 @@
 
 // checking docker image name
 
-if (env.BRANCH_NAME == 'master') {
-  image = "1.0.${BUILD_NUMBER}"
-} else if (env.BRANCH_NAME == 'dev') {
-  image = "dev-$GIT_COMMIT"
-} else if (env.BRANCH_NAME == 'staging') {
-  image = "staging-$GIT_COMMIT"
-} else {
-  image = "unknown"
-}
+
 
 // pipline:
 
@@ -19,6 +11,15 @@ pipeline {
     
     stages { 
       stage('build') {
+        if (env.BRANCH_NAME == 'master') {
+          image = "1.0.${BUILD_NUMBER}"
+        } else if (env.BRANCH_NAME == 'dev') {
+          image = "dev-$GIT_COMMIT"
+        } else if (env.BRANCH_NAME == 'staging') {
+          image = "staging-$GIT_COMMIT"
+        } else {
+          image = "unknown"
+        }
         steps{
           script{
             sh "docker build -t natalicot/echo-app:${image} ."
