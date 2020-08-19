@@ -3,11 +3,11 @@
 if (env.BRANCH_NAME == 'master') {
   image = "1.0.${BUILD_NUMBER}"
 } else if (env.BRANCH_NAME == 'dev') {
-  impact = "GIT_COMMIT"
+  image = "GIT_COMMIT"
 } else if (env.BRANCH_NAME == 'staging') {
-  impact = "medium"
+  image = "medium"
 } else {
-  impact = "unknown"
+  image = "unknown"
 }
 
 
@@ -24,7 +24,7 @@ pipeline {
             }
             steps{
                 script{
-                    echo "${impact}"
+                    echo "${image}"
                     //sh "docker build -t 1.0.${BUILD_NUMBER} ."
                 }
             }
