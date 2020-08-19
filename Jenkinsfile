@@ -3,13 +3,6 @@ pipeline {
 
     agent any
 
-    triggers {
-        // github(
-        //     triggerOnPush: true,
-        //     triggerOnMergeRequest: true,
-        //     branchFilterType: 'All',
-        //     addVoteOnMergeRequest: true)
-    }
 
     stages { 
         stage('build') {
