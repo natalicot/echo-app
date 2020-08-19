@@ -4,18 +4,18 @@ pipeline {
     agent any
 
     triggers {
-        github(
-            triggerOnPush: true,
-            triggerOnMergeRequest: true,
-            branchFilterType: 'All',
-            addVoteOnMergeRequest: true)
+        // github(
+        //     triggerOnPush: true,
+        //     triggerOnMergeRequest: true,
+        //     branchFilterType: 'All',
+        //     addVoteOnMergeRequest: true)
     }
 
     stages { 
         stage('build') {
             steps{
                 script{
-                        sh "echo hello"
+                        sh "docker build -t 1.0.${JENKINS_BUILD_NUMBER} ."
                     }
                 }
             }
@@ -68,9 +68,9 @@ pipeline {
         // }
     }
     post { 
-        always { 
-            // sh 'docker rm -f runtest || true'
-        }
+        // always { 
+        //     // sh 'docker rm -f runtest || true'
+        // }
         failure {
             updateGitlabCommitStatus state: 'failed'
         }
