@@ -11,7 +11,7 @@ pipeline {
             }
             steps{
                 script{
-                    sh "docker build -t 1.0.${BUILD_NUMBER} ."
+                    sh "sudo docker build -t 1.0.${BUILD_NUMBER} ."
                 }
             }
             // when {
