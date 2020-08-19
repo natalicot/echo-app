@@ -1,4 +1,17 @@
 
+// checking docker image name
+if (env.BRANCH_NAME == 'master') {
+  image = "1.0.${BUILD_NUMBER}"
+} else if (env.BRANCH_NAME == 'dev') {
+  impact = "low"
+} else if (env.BRANCH_NAME == 'staging') {
+  impact = "medium"
+} else {
+  impact = "unknown"
+}
+
+
+
 pipeline {
 
     agent any
@@ -6,23 +19,24 @@ pipeline {
 
     stages { 
         stage('build') {
-            if (env.BRANCH_NAME == 'master'){
-                docker build -t 1.0.${BUILD_NUMBER} .
-            }
-            else {
-                docker build -t dev-${GIT_COMMIT_HASH} .
-            }
-
-
-
-            // when {
-            //     expression { BRANCH_NAME =~ /^(master$)/}
+            // if (env.BRANCH_NAME == 'master'){
+            //     docker build -t 1.0.${BUILD_NUMBER} .
             // }
-            // steps{
-            //     script{
-            //         sh "docker build -t 1.0.${BUILD_NUMBER} ."
-            //     }
+            // else {
+            //     docker build -t dev-${GIT_COMMIT_HASH} .
             // }
+
+
+
+            when {
+                expression { BRANCH_NAME =~ /^(master$)/}
+            }
+            steps{
+                script{
+                    echo "${impact}"
+                    sh "docker build -t 1.0.${BUILD_NUMBER} ."
+                }
+            }
             // when {
             //     expression { BRANCH_NAME =~ /^(dev$)/}
             // }
