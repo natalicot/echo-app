@@ -4,9 +4,9 @@
 if (env.BRANCH_NAME == 'master') {
   image = "1.0.${BUILD_NUMBER}"
 } else if (env.BRANCH_NAME == 'dev') {
-  image = "dev-${GIT_COMMIT}"
+  image = "dev-$GIT_COMMIT"
 } else if (env.BRANCH_NAME == 'staging') {
-  image = "staging-${GIT_COMMIT}"
+  image = "staging-$GIT_COMMIT"
 } else {
   image = "unknown"
 }
