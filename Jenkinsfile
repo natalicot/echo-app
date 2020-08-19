@@ -1,16 +1,17 @@
 
 // checking docker image name
+
 if (env.BRANCH_NAME == 'master') {
   image = "1.0.${BUILD_NUMBER}"
 } else if (env.BRANCH_NAME == 'dev') {
   image = "GIT_COMMIT"
 } else if (env.BRANCH_NAME == 'staging') {
-  image = "medium"
+  image = "GIT_COMMIT"
 } else {
   image = "unknown"
 }
 
-
+// pipline:
 
 pipeline {
 
@@ -19,13 +20,9 @@ pipeline {
 
     stages { 
         stage('build') {
-            when {
-                expression { BRANCH_NAME =~ /^(master$)/}
-            }
             steps{
                 script{
-                    echo "${image}"
-                    //sh "docker build -t 1.0.${BUILD_NUMBER} ."
+                    sh "docker build -t ${image} ."
                 }
             }
         }
